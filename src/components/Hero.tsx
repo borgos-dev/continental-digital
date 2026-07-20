@@ -9,8 +9,8 @@ export default function Hero() {
           Local Search · Douala
         </div>
         <h1 className="mb-5.5 max-w-[15ch] font-display text-[clamp(32px,5.4vw,54px)] leading-[1.06] font-bold tracking-[-0.02em] max-sm:max-w-none">
-          Your shop is real. On Google, it{" "}
-          <em className="text-pin not-italic">doesn&apos;t exist</em> yet.
+          Your shop is real. Let&apos;s{" "}
+          <em className="text-pin not-italic">put it on the map</em>.
         </h1>
         <p className="mb-8 max-w-[46ch] text-[17px] text-muted-ink">
           We claim, verify, and build out your business on Google Maps and
