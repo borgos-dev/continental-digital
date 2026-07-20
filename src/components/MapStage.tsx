@@ -5,6 +5,9 @@ import { Star } from "lucide-react";
 
 const NEAR_TEAL = new Set([2, 9, 10, 11, 18, 19]);
 const NEAR_GOLD = new Set([9, 12, 20, 27]);
+const BLOCK_SHADE = [0.22, 0.42, 0.3, 0.52, 0.36, 0.26, 0.46, 0.32];
+const ROAD_LINES =
+  "repeating-linear-gradient(0deg, rgba(238,241,236,0.08) 0, rgba(238,241,236,0.08) 1px, transparent 1px, transparent 38px), repeating-linear-gradient(90deg, rgba(238,241,236,0.08) 0, rgba(238,241,236,0.08) 1px, transparent 1px, transparent 66px)";
 
 export default function MapStage() {
   const [found, setFound] = useState(false);
@@ -50,25 +53,31 @@ export default function MapStage() {
         </div>
       </div>
 
-      <div className="relative grid h-[300px] grid-cols-8 grid-rows-4 gap-1.5 p-5">
-        {Array.from({ length: 32 }).map((_, i) => (
-          <div
-            key={i}
-            className={`rounded-[5px] transition-[filter,background-color] duration-500 ${
-              found ? "grayscale-0 brightness-100" : "grayscale brightness-[.7]"
-            } ${
-              found && NEAR_TEAL.has(i)
-                ? "bg-teal/18"
-                : found && NEAR_GOLD.has(i)
-                  ? "bg-gold/14"
-                  : "bg-cream/5"
-            }`}
-          />
-        ))}
+      <div
+        className="relative grid h-[300px] grid-cols-8 grid-rows-4 gap-1.5 p-5"
+        style={{ backgroundImage: ROAD_LINES }}
+      >
+        {Array.from({ length: 32 }).map((_, i) => {
+          const isTeal = found && NEAR_TEAL.has(i);
+          const isGold = found && NEAR_GOLD.has(i);
+          return (
+            <div
+              key={i}
+              style={
+                isTeal || isGold
+                  ? undefined
+                  : { opacity: BLOCK_SHADE[i % BLOCK_SHADE.length] }
+              }
+              className={`rounded-[5px] bg-cream transition-[filter,background-color,opacity] duration-500 ${
+                found ? "grayscale-0 brightness-100" : "grayscale brightness-[.7]"
+              } ${isTeal ? "bg-teal/35" : isGold ? "bg-gold/30" : ""}`}
+            />
+          );
+        })}
 
         <span
           className={`pointer-events-none absolute top-[44%] left-1/2 -ml-[7px] -mt-[7px] h-3.5 w-3.5 rounded-full bg-pin/50 ${
-            found ? "animate-[map-ping_1.6s_ease-out_2]" : "opacity-0"
+            found ? "animate-[map-ping_1.8s_ease-out_infinite]" : "opacity-0"
           }`}
         />
 
